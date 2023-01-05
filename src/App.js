@@ -2,7 +2,7 @@ import './App.css';
 import loading from './loading.svg'
 import {useState,useEffect} from 'react'
 import FeaturedMovie from './components/project/featuredMovie/FeaturedMovie';
-import TMDB from './components/requisiton/TMDB';
+import TMDB from './components/requisition/TMDB';
 import MoviesList from './components/project/moviesList/MoviesList';
 import Container from './components/layout/container/Container';
 import Header from './components/layout/header/Header';

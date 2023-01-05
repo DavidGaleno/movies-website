@@ -7,10 +7,10 @@ export default function MoviesList({title,id,items}){
     const [imageWidth,setimageWidth] = useState(30)
     const [scrollX,setScrollX] = useState(0)
     const intervalRef = useRef(null) 
+    //Multiplicação por 10 devido ao fato de estar em REM
     let listWidth = items.results.length * (imageWidth * 0.9 * 10)
 
     useEffect(()=>{
-        console.log(window.innerWidth)
         if (window.innerWidth <= 600){
             setimageWidth(10)
         }
@@ -20,6 +20,7 @@ export default function MoviesList({title,id,items}){
         else{
             setimageWidth(30)
         }
+        console.log(listWidth)
     },[window.innerWidth])
 
 
@@ -27,6 +28,7 @@ export default function MoviesList({title,id,items}){
         if(intervalRef.current) return;
         intervalRef.current = setInterval(()=>{
             setScrollX(prevScrollX => {
+                console.log(scrollX)
                     if (prevScrollX + (Math.round(window.innerWidth/2)/10) >= 0){
                     clearInterval(intervalRef.current)
                     intervalRef.current = null
@@ -48,8 +50,10 @@ export default function MoviesList({title,id,items}){
     }
 
     const startRightArrow = ()=>{
+        console.log(scrollX)
         intervalRef.current = setInterval(()=>{
             setScrollX(prevScrollX => {
+                //Divisão por 10 para transformar de px para REM
                if((window.innerWidth - listWidth)/10 > (prevScrollX - (Math.round(window.innerWidth/2)/10))){
                 if(window.innerWidth <= 600){
                     return (window.innerWidth - listWidth)/10 - 20
@@ -84,7 +88,7 @@ export default function MoviesList({title,id,items}){
                         <div className={styles.leftbutton} style={{opacity:scrollX >= 0 && '.3'}} >
                         <NavigateBeforeIcon style={{fontSize:50}}  onMouseDown={startLeftArrow} onMouseUp={stopLeftArrow} />
                       </div>
-                      <div className={styles.rightbutton} style={{opacity:scrollX <=((window.innerWidth - listWidth)/10) && '.3'}}>
+                      <div className={styles.rightbutton} style={{opacity:scrollX <=((window.innerWidth - listWidth)) && '.3'}}>
                         <NavigateNextIcon style={{fontSize:50}} onMouseDown={startRightArrow} onMouseUp={stopRightArrow}/>
                       </div>
                         {items.results.length > 0 && (items.results.map((item,key)=>(
